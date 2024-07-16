@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.habitsapp.navigation.NavigationHost
+import com.habitsapp.navigation.NavigationRoute
 import com.habitsapp.ui.theme.HabitsAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +18,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             HabitsAppTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Text(text = "Hello")
+                    val navController = rememberNavController()
+                    NavigationHost(navHostController = navController, startDestination = NavigationRoute.Onboarding )
                 }
             }
         }
