@@ -63,6 +63,10 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
+    // Pager
+    implementation(libs.google.accompanist.pager)
+    implementation(libs.google.accompanist.pager.indicators)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

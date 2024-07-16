@@ -17,9 +17,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HabitsAppTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     val navController = rememberNavController()
-                    NavigationHost(navHostController = navController, startDestination = NavigationRoute.Onboarding )
+                    NavigationHost(
+                        navHostController = navController,
+                        startDestination = NavigationRoute.Onboarding
+                    )
                 }
             }
         }
