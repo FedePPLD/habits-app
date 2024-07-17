@@ -1,11 +1,23 @@
 package com.habitsapp.onboarding.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.habitsapp.R
 import com.habitsapp.onboarding.presentation.components.OnboardingPager
 
 @Composable
-fun OnboardingScreen(onFinish: () -> Unit) {
+fun OnboardingScreen(
+    viewModel: OnboardingViewModel = hiltViewModel(),
+    onFinish: () -> Unit
+) {
+
+    LaunchedEffect(key1 = viewModel.hasSeenOnboarding) {
+        if (viewModel.hasSeenOnboarding) {
+            onFinish()
+        }
+    }
+
     val pages = listOf(
         OnboardingPagerInformation(
             "Welcome to Habits Tracker",
@@ -29,5 +41,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
         ),
     )
 
-    OnboardingPager(pages = pages, onFinish = onFinish)
+    OnboardingPager(pages = pages, onFinish = {
+        viewModel.completeOnboarding()
+    })
 }
