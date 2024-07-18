@@ -29,7 +29,6 @@ object OnboardingModule {
         return OnboardingRepositoryImpl(sharedPreferences)
     }
 
-
     @Provides
     @Singleton
     fun provideHasSeenOnboardingUseCase(repository: OnboardinRepository): HasSeenOnboardingUseCase {
