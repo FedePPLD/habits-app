@@ -16,7 +16,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -25,12 +27,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.habitsapp.authentication.presentation.login.LoginEvent
+import com.habitsapp.authentication.presentation.login.LoginState
 import com.habitsapp.core.presentation.HabitPasswordTextfield
 import com.habitsapp.core.presentation.HabitTextfield
 import com.habitsapp.core.presentation.HabitsButton
 
 @Composable
-fun LoginForm(modifier: Modifier = Modifier) {
+fun LoginForm(
+    state: LoginState,
+    onEvent: (LoginEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier.background(Color.White, shape = RoundedCornerShape(20.dp)),
@@ -43,12 +53,14 @@ fun LoginForm(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.tertiary
         )
         HorizontalDivider(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             color = MaterialTheme.colorScheme.background,
         )
         HabitTextfield(
-            value = "Email",
-            onValueChange = {},
+            value = state.email,
+            onValueChange = { onEvent(LoginEvent.EmailChange(it)) },
             placeholder = "Email",
             contentDescription = "Enter email",
             modifier = Modifier
@@ -62,14 +74,14 @@ fun LoginForm(modifier: Modifier = Modifier) {
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(onAny = {
-                //
+                focusManager.moveFocus(FocusDirection.Next)
             }),
-            errorMessage = null,
-            isEnabled = true
+            errorMessage = state.emailError,
+            isEnabled = !state.isLoading
         )
         HabitPasswordTextfield(
-            value = "Password",
-            onValueChange = {},
+            value = state.password,
+            onValueChange = { onEvent(LoginEvent.PasswordChange(it)) },
             placeholder = "Password",
             contentDescription = "Enter password",
             modifier = Modifier
@@ -83,19 +95,20 @@ fun LoginForm(modifier: Modifier = Modifier) {
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(onAny = {
-                //
+                focusManager.clearFocus()
+                onEvent(LoginEvent.Login)
             }),
-            errorMessage = null,
-            isEnabled = true
+            errorMessage = state.passwordError,
+            isEnabled = !state.isLoading
         )
         HabitsButton(
             text = "Login",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            isEnabled = true
+            isEnabled = !state.isLoading
         ) {
-            //
+            onEvent(LoginEvent.Login)
         }
         TextButton(onClick = { /*TODO*/ }) {
             Text(
@@ -104,7 +117,7 @@ fun LoginForm(modifier: Modifier = Modifier) {
                 textDecoration = TextDecoration.Underline
             )
         }
-        TextButton(onClick = { /*TODO*/ }) {
+        TextButton(onClick = { onEvent(LoginEvent.SignUp) }) {
             Text(
                 text = buildAnnotatedString {
                     append("Don't have an account? ")
