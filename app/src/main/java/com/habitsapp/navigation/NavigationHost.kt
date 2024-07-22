@@ -1,5 +1,6 @@
 package com.habitsapp.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -16,8 +17,25 @@ fun NavigationHost(navHostController: NavHostController, startDestination: Navig
                 navHostController.navigate(NavigationRoute.Login.route)
             })
         }
+
         composable(NavigationRoute.Login.route) {
-           LoginScreen()
+            LoginScreen(
+                onLogin = {
+                    navHostController.popBackStack()
+                    navHostController.navigate(NavigationRoute.Home.route)
+                },
+                onSingUp = {
+                    navHostController.navigate(NavigationRoute.SingUp.route)
+                }
+            )
+        }
+
+        composable(NavigationRoute.SingUp.route) {
+            Text(text = "SingUp")
+        }
+
+        composable(NavigationRoute.Home.route) {
+            Text(text = "Home")
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -23,9 +24,23 @@ import com.habitsapp.core.presentation.HabitTitle
 
 @Composable
 fun LoginScreen(
+    onLogin: () -> Unit,
+    onSingUp: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
+
+    LaunchedEffect(state.isLoading) {
+        if (state.isLoggedIn) {
+            onLogin()
+        }
+    }
+
+    LaunchedEffect(state.singUp) {
+        if (state.singUp) {
+            onSingUp()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
