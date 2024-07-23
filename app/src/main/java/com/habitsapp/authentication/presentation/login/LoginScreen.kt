@@ -25,7 +25,7 @@ import com.habitsapp.core.presentation.HabitTitle
 @Composable
 fun LoginScreen(
     onLogin: () -> Unit,
-    onSingUp: () -> Unit,
+    onSignUp: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
@@ -33,12 +33,6 @@ fun LoginScreen(
     LaunchedEffect(state.isLoading) {
         if (state.isLoggedIn) {
             onLogin()
-        }
-    }
-
-    LaunchedEffect(state.singUp) {
-        if (state.singUp) {
-            onSingUp()
         }
     }
 
@@ -68,7 +62,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier)
             Spacer(modifier = Modifier)
             HabitTitle(title = "Welcome to Habits Tracker")
-            LoginForm(state, viewModel::onEvent)
+            LoginForm(state, viewModel::onEvent, onSignUp)
         }
     }
 }

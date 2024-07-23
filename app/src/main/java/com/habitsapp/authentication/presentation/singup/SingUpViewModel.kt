@@ -1,48 +1,51 @@
-package com.habitsapp.authentication.presentation.login
+package com.habitsapp.authentication.presentation.singup
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.habitsapp.authentication.domain.usecase.LoginUseCases
 import com.habitsapp.authentication.domain.usecase.PasswordResult
+import com.habitsapp.authentication.domain.usecase.SignUpUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginUseCases: LoginUseCases,
+class SingUpViewModel @Inject constructor(
+    private val singUpUseCases: SignUpUseCases,
 ) : ViewModel() {
-    var state by mutableStateOf(LoginState())
+    var state by mutableStateOf(SingUpState())
         private set
 
-    fun onEvent(event: LoginEvent) {
+    fun onEvent(event: SingUpEvent) {
         when (event) {
-            is LoginEvent.EmailChange -> {
+            is SingUpEvent.EmailChange -> {
                 state = state.copy(email = event.email)
             }
 
-            is LoginEvent.PasswordChange -> {
+            is SingUpEvent.PasswordChange -> {
                 state = state.copy(password = event.password)
             }
 
-            is LoginEvent.Login -> {
+            is SingUpEvent.LogIn -> {
+                state = state.copy(logIn = true)
+            }
 
-                login()
+            is SingUpEvent.SignUp -> {
+                singUp()
             }
         }
     }
 
-    private fun login() {
+    private fun singUp() {
         state = state.copy(emailError = null, passwordError = null)
 
-        if (!loginUseCases.validateEmailUseCase(state.email)) {
+        if (!singUpUseCases.validateEmailUseCase(state.email)) {
             state = state.copy(emailError = "The email is invalid")
         }
 
-        val passwordResult = loginUseCases.validatePasswordUseCase(state.password)
+        val passwordResult = singUpUseCases.validatePasswordUseCase(state.password)
 
         if (passwordResult is PasswordResult.Invalid) {
             state = state.copy(passwordError = passwordResult.errorMesagge)
@@ -54,9 +57,9 @@ class LoginViewModel @Inject constructor(
             )
 
             viewModelScope.launch {
-                loginUseCases.loginUseCase(state.email, state.password).onSuccess {
+                singUpUseCases.signUpUseCase(state.email, state.password).onSuccess {
                     state = state.copy(
-                        isLoggedIn = true
+                        isSignedIn = true
                     )
                 }.onFailure {
                     state = state.copy(

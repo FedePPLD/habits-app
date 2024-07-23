@@ -39,6 +39,7 @@ import com.habitsapp.core.presentation.HabitsButton
 fun LoginForm(
     state: LoginState,
     onEvent: (LoginEvent) -> Unit,
+    onSignUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -120,7 +121,7 @@ fun LoginForm(
                     textDecoration = TextDecoration.Underline
                 )
             }
-            TextButton(onClick = { onEvent(LoginEvent.SignUp) }) {
+            TextButton(onClick = onSignUp) {
                 Text(
                     text = buildAnnotatedString {
                         append("Don't have an account? ")

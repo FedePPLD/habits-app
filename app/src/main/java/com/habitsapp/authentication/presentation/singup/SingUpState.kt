@@ -1,10 +1,11 @@
-package com.habitsapp.authentication.presentation.login
+package com.habitsapp.authentication.presentation.singup
 
-data class LoginState(
+data class SingUpState(
     val email: String = "",
     val password: String = "",
     val emailError: String? = null,
     val passwordError: String? = null,
-    val isLoggedIn: Boolean = false,
+    val isSignedIn: Boolean = false,
     val isLoading: Boolean = false,
+    val logIn: Boolean = false
 )

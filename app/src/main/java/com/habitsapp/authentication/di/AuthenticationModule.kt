@@ -4,8 +4,11 @@ import com.habitsapp.authentication.data.matcher.EmailMatcherImpl
 import com.habitsapp.authentication.data.repository.AuthenticationRepositoryImpl
 import com.habitsapp.authentication.domain.matcher.EmailMatcher
 import com.habitsapp.authentication.domain.repository.AuthenticationRepository
+import com.habitsapp.authentication.domain.usecase.GetUserIdUseCase
 import com.habitsapp.authentication.domain.usecase.LoginUseCase
 import com.habitsapp.authentication.domain.usecase.LoginUseCases
+import com.habitsapp.authentication.domain.usecase.SignUpUseCase
+import com.habitsapp.authentication.domain.usecase.SignUpUseCases
 import com.habitsapp.authentication.domain.usecase.ValidateEmailUseCase
 import com.habitsapp.authentication.domain.usecase.ValidatePasswordUseCase
 import dagger.Module
@@ -40,5 +43,24 @@ object AuthenticationModule {
             validateEmailUseCase = ValidateEmailUseCase(emailMatcher),
             validatePasswordUseCase = ValidatePasswordUseCase()
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignUpUseCases(
+        repository: AuthenticationRepository,
+        emailMatcher: EmailMatcher
+    ): SignUpUseCases {
+        return SignUpUseCases(
+            signUpUseCase = SignUpUseCase(repository),
+            validateEmailUseCase = ValidateEmailUseCase(emailMatcher),
+            validatePasswordUseCase = ValidatePasswordUseCase()
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserIdUseCase(repository: AuthenticationRepository): GetUserIdUseCase {
+        return GetUserIdUseCase(repository)
     }
 }
