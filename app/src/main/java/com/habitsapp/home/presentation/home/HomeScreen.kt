@@ -94,7 +94,7 @@ fun HomeScreen(
                     habit = it,
                     onHabitClick = { /*TODO*/ },
                     selectedDate = state.selectedDate.toLocalDate(),
-                    onCheckedChange = { viewModel.onEvent(HomeEvent.CompleteHabit(it.id)) }
+                    onCheckedChange = { viewModel.onEvent(HomeEvent.CompleteHabit(it)) }
                 )
             }
         }
