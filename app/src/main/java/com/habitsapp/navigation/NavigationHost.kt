@@ -1,12 +1,12 @@
 package com.habitsapp.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.habitsapp.authentication.presentation.login.LoginScreen
 import com.habitsapp.authentication.presentation.singup.SingUpScreen
+import com.habitsapp.home.presentation.home.HomeScreen
 import com.habitsapp.onboarding.presentation.OnboardingScreen
 
 @Composable
@@ -48,7 +48,7 @@ fun NavigationHost(navHostController: NavHostController, startDestination: Navig
         }
 
         composable(NavigationRoute.Home.route) {
-            Text(text = "Home")
+            HomeScreen()
         }
     }
 }
