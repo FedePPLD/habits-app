@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.habitsapp.authentication.presentation.login.LoginScreen
 import com.habitsapp.authentication.presentation.singup.SingUpScreen
+import com.habitsapp.home.presentation.detail.DetailScreen
 import com.habitsapp.home.presentation.home.HomeScreen
 import com.habitsapp.onboarding.presentation.OnboardingScreen
 
@@ -26,12 +27,12 @@ fun NavigationHost(navHostController: NavHostController, startDestination: Navig
                     navHostController.navigate(NavigationRoute.Home.route)
                 },
                 onSignUp = {
-                    navHostController.navigate(NavigationRoute.SingUp.route)
+                    navHostController.navigate(NavigationRoute.SignUp.route)
                 }
             )
         }
 
-        composable(NavigationRoute.SingUp.route) {
+        composable(NavigationRoute.SignUp.route) {
             SingUpScreen(
                 onSignIn = {
                     navHostController.navigate(NavigationRoute.Login.route) {
@@ -48,7 +49,19 @@ fun NavigationHost(navHostController: NavHostController, startDestination: Navig
         }
 
         composable(NavigationRoute.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onNewHabit = {
+                    navHostController.navigate(NavigationRoute.Detail.route)
+                }
+            )
+        }
+
+        composable(NavigationRoute.Detail.route) {
+            DetailScreen(
+                onBack = {
+                    navHostController.popBackStack()
+                },
+                onSave = { navHostController.popBackStack() })
         }
     }
 }

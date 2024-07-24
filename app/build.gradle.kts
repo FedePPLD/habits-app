@@ -81,6 +81,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.dagger.hilt.compiler)
 
+    // Time Picker
+    implementation(libs.maxkeppeler.sheets.core)
+    implementation(libs.maxkeppeler.sheets.clock)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
