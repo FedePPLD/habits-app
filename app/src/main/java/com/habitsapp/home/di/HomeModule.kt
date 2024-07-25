@@ -1,6 +1,9 @@
 package com.habitsapp.home.di
 
 import com.habitsapp.home.data.HomeRepositoryImpl
+import com.habitsapp.home.domain.detail.usecase.DetailUseCases
+import com.habitsapp.home.domain.detail.usecase.GetHabitByIdUseCase
+import com.habitsapp.home.domain.detail.usecase.InsertHabitUseCase
 import com.habitsapp.home.domain.home.usecase.CompleteHabitUseCase
 import com.habitsapp.home.domain.home.usecase.GetAllHabitsForSelectedDateUseCase
 import com.habitsapp.home.domain.home.usecase.HomeUseCases
@@ -20,6 +23,15 @@ object HomeModule {
         return HomeUseCases(
             completeHabitUseCase = CompleteHabitUseCase(repository),
             getAllHabitsForSelectedDateUseCase = GetAllHabitsForSelectedDateUseCase(repository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailUseCases(repository: HomeRepository): DetailUseCases {
+        return DetailUseCases(
+            getHabitsByIdUseCase = GetHabitByIdUseCase(repository),
+            insertHabitUseCase = InsertHabitUseCase(repository),
         )
     }
 

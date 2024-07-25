@@ -39,6 +39,7 @@ import com.habitsapp.home.presentation.home.components.HomeQuote
 @Composable
 fun HomeScreen(
     onNewHabit: () -> Unit,
+    onEditHabit: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -109,7 +110,7 @@ fun HomeScreen(
             items(state.habits) {
                 HomeHabit(
                     habit = it,
-                    onHabitClick = { /*TODO*/ },
+                    onHabitClick = { onEditHabit(it.id) },
                     selectedDate = state.selectedDate.toLocalDate(),
                     onCheckedChange = { viewModel.onEvent(HomeEvent.CompleteHabit(it)) }
                 )
