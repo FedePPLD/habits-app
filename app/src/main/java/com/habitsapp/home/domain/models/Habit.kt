@@ -12,4 +12,6 @@ data class Habit(
     val completedDates: List<LocalDate>,
     val reminder: LocalTime,
     val startDate: ZonedDateTime
-)
+) {
+
+}

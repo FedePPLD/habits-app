@@ -90,9 +90,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    // Moshi
+    // Retrofit
     implementation(libs.converter.moshi)
     implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
