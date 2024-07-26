@@ -85,6 +85,15 @@ dependencies {
     implementation(libs.maxkeppeler.sheets.core)
     implementation(libs.maxkeppeler.sheets.clock)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Moshi
+    implementation(libs.converter.moshi)
+    implementation(libs.retrofit)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
