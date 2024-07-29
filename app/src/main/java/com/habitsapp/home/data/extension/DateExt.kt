@@ -11,11 +11,14 @@ fun ZonedDateTime.toStartOfDateTimestamp(): Long {
     return truncatedTo(ChronoUnit.DAYS).toEpochSecond() * 1000
 }
 
-fun Long.toZoneDateTime(): ZonedDateTime {
-    return ZonedDateTime.ofInstant(Instant.ofEpochMilli(this), ZoneId.systemDefault())
+fun Long.toZonedDateTime(): ZonedDateTime {
+    return ZonedDateTime.ofInstant(
+        Instant.ofEpochMilli(this),
+        ZoneId.systemDefault()
+    )
 }
 
-fun ZonedDateTime.toTimestamp(): Long {
+fun ZonedDateTime.toTimeStamp(): Long {
     return this.toInstant().toEpochMilli()
 }
 
@@ -23,6 +26,6 @@ fun LocalDate.toZonedDateTime(): ZonedDateTime {
     return this.atStartOfDay(ZoneId.systemDefault())
 }
 
-fun LocalTime.toZonedTime(): ZonedDateTime {
+fun LocalTime.toZonedDateTime(): ZonedDateTime {
     return this.atDate(LocalDate.now()).atZone(ZoneId.systemDefault())
 }

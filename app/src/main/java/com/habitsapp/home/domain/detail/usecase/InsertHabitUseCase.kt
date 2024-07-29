@@ -7,6 +7,6 @@ class InsertHabitUseCase(
     private val repository: HomeRepository
 ) {
     suspend operator fun invoke(habit: Habit) {
-        repository.insertOrUpdateHabit(habit)
+        repository.insertHabit(habit)
     }
 }

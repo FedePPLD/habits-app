@@ -13,6 +13,6 @@ class CompleteHabitUseCase(
         } else {
             habit.copy(completedDates = habit.completedDates + date.toLocalDate())
         }
-        repository.insertOrUpdateHabit(newHabit)
+        repository.insertHabit(newHabit)
     }
 }

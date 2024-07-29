@@ -1,6 +1,6 @@
 package com.habitsapp.home.domain.detail.usecase
 
 data class DetailUseCases(
-    val getHabitsByIdUseCase: GetHabitByIdUseCase,
+    val getHabitByIdUseCase: GetHabitByIdUseCase,
     val insertHabitUseCase: InsertHabitUseCase
 )

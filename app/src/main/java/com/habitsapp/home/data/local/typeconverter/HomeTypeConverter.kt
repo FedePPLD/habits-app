@@ -7,13 +7,10 @@ import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import androidx.room.util.joinIntoString
 import androidx.room.util.splitToIntList
-import com.squareup.moshi.Moshi
 import java.lang.NumberFormatException
 
 @ProvidedTypeConverter
-class HomeTypeConverter(
-    private val moshi: Moshi
-) {
+class HomeTypeConverter {
     @SuppressLint("RestrictedApi")
     @TypeConverter
     fun fromFrequency(days: List<Int>): String {

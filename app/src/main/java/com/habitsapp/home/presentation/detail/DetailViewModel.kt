@@ -26,7 +26,7 @@ class DetailViewModel @Inject constructor(
         val id = savedStateHandle.get<String?>("habitId")
         if (id != null) {
             viewModelScope.launch {
-                val habit = detailUseCases.getHabitsByIdUseCase(id)
+                val habit = detailUseCases.getHabitByIdUseCase(id)
                 state = state.copy(
                     id = habit.id,
                     habitName = habit.name,
