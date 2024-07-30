@@ -2,7 +2,8 @@ package com.habitsapp.home.di
 
 import android.content.Context
 import androidx.room.Room
-import com.habitsapp.home.data.HomeDatabase
+import androidx.work.WorkManager
+import com.habitsapp.home.data.local.HomeDatabase
 import com.habitsapp.home.data.alarm.AlarmHandlerImpl
 import com.habitsapp.home.data.local.HomeDao
 import com.habitsapp.home.data.local.typeconverter.HomeTypeConverter
@@ -15,6 +16,7 @@ import com.habitsapp.home.domain.detail.usecase.InsertHabitUseCase
 import com.habitsapp.home.domain.home.usecase.CompleteHabitUseCase
 import com.habitsapp.home.domain.home.usecase.GetAllHabitsForSelectedDateUseCase
 import com.habitsapp.home.domain.home.usecase.HomeUseCases
+import com.habitsapp.home.domain.home.usecase.SyncHabitUseCase
 import com.habitsapp.home.domain.repository.HomeRepository
 import dagger.Module
 import dagger.Provides
@@ -35,7 +37,8 @@ object HomeModule {
     fun provideHomeUseCases(repository: HomeRepository): HomeUseCases {
         return HomeUseCases(
             completeHabitUseCase = CompleteHabitUseCase(repository),
-            getAllHabitsForSelectedDateUseCase = GetAllHabitsForSelectedDateUseCase(repository)
+            getAllHabitsForSelectedDateUseCase = GetAllHabitsForSelectedDateUseCase(repository),
+            syncHabitUseCase = SyncHabitUseCase(repository)
         )
     }
 
@@ -81,14 +84,21 @@ object HomeModule {
     fun provideHomeRepository(
         dao: HomeDao,
         api: HomeApi,
-        alarmHandler: AlarmHandler
+        alarmHandler: AlarmHandler,
+        workManager: WorkManager
     ): HomeRepository {
-        return HomeRepositoryImpl(dao, api, alarmHandler)
+        return HomeRepositoryImpl(dao, api, alarmHandler, workManager)
     }
 
     @Singleton
     @Provides
     fun provideAlarmHandler(@ApplicationContext context: Context): AlarmHandler {
         return AlarmHandlerImpl(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
+        return WorkManager.getInstance(context)
     }
 }

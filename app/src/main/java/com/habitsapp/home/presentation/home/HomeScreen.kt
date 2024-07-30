@@ -1,5 +1,7 @@
 package com.habitsapp.home.presentation.home
 
+import android.Manifest
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.habitsapp.R
+import com.habitsapp.home.presentation.home.components.HomeASkPermission
 import com.habitsapp.home.presentation.home.components.HomeDateSelector
 import com.habitsapp.home.presentation.home.components.HomeHabit
 import com.habitsapp.home.presentation.home.components.HomeQuote
@@ -67,6 +70,9 @@ fun HomeScreen(
 
         }
     }) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            HomeASkPermission(permission = Manifest.permission.POST_NOTIFICATIONS)
+        }
         LazyColumn(
             modifier = Modifier
                 .padding(it)

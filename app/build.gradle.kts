@@ -76,10 +76,18 @@ dependencies {
     implementation(libs.google.accompanist.pager)
     implementation(libs.google.accompanist.pager.indicators)
 
+    // Permissions
+    implementation(libs.google.accompanist.permissions)
+
     // Dagger Hilt
     implementation(libs.dagger.hilt)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.dagger.hilt.compiler)
+    ksp(libs.hilt.compiler)
+
+    // Work Manager
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.hilt.work)
 
     // Time Picker
     implementation(libs.maxkeppeler.sheets.core)
