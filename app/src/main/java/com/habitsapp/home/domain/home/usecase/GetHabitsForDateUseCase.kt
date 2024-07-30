@@ -11,10 +11,10 @@ class GetAllHabitsForSelectedDateUseCase(
     private val repository: HomeRepository
 ) {
     operator fun invoke(date: ZonedDateTime): Flow<List<Habit>> {
-        return repository.getAllHabitsForSelectedDate(date).distinctUntilChanged().map {
+        return repository.getAllHabitsForSelectedDate(date).map {
             it.filter {
                 it.frequency.contains(date.dayOfWeek)
             }
-        }
+        }.distinctUntilChanged()
     }
 }

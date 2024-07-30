@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.habitsapp.home.domain.home.usecase.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +20,8 @@ class HomeViewModel @Inject constructor(
 
     var state by mutableStateOf(HomeState())
         private set
+
+    private var currentDayJob: Job? = null
 
     init {
         println("Test")
@@ -46,7 +49,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getHabits() {
-        viewModelScope.launch {
+        currentDayJob?.cancel()
+
+        currentDayJob = viewModelScope.launch {
             homeUseCases.getAllHabitsForSelectedDateUseCase(state.selectedDate).collectLatest {
                 state = state.copy(
                     habits = it

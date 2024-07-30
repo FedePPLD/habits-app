@@ -11,9 +11,14 @@ import com.habitsapp.authentication.presentation.singup.SingUpScreen
 import com.habitsapp.home.presentation.detail.DetailScreen
 import com.habitsapp.home.presentation.home.HomeScreen
 import com.habitsapp.onboarding.presentation.OnboardingScreen
+import com.habitsapp.settings.presentation.SettingsScreen
 
 @Composable
-fun NavigationHost(navHostController: NavHostController, startDestination: NavigationRoute) {
+fun NavigationHost(
+    navHostController: NavHostController,
+    startDestination: NavigationRoute,
+    logout: () -> Unit
+) {
     NavHost(navController = navHostController, startDestination = startDestination.route) {
         composable(NavigationRoute.Onboarding.route) {
             OnboardingScreen(onFinish = {
@@ -55,6 +60,9 @@ fun NavigationHost(navHostController: NavHostController, startDestination: Navig
                 onNewHabit = {
                     navHostController.navigate(NavigationRoute.Detail.route)
                 },
+                onSettings = {
+                    navHostController.navigate(NavigationRoute.Settings.route)
+                },
                 onEditHabit = {
                     navHostController.navigate(NavigationRoute.Detail.route + "?habitId=$it")
                 }
@@ -73,6 +81,22 @@ fun NavigationHost(navHostController: NavHostController, startDestination: Navig
                     navHostController.popBackStack()
                 },
                 onSave = { navHostController.popBackStack() })
+        }
+
+        composable(NavigationRoute.Settings.route) {
+            SettingsScreen(
+                onBack = {
+                    navHostController.popBackStack()
+                },
+                onLogout = {
+                    logout()
+                    navHostController.navigate(NavigationRoute.Login.route) {
+                        popUpTo(navHostController.graph.id) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }

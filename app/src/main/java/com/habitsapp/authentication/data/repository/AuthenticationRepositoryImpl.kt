@@ -15,7 +15,7 @@ class AuthenticationRepositoryImpl : AuthenticationRepository {
         }
     }
 
-    override suspend fun singup(email: String, password: String): Result<Unit> {
+    override suspend fun signup(email: String, password: String): Result<Unit> {
         return try {
             Firebase.auth.createUserWithEmailAndPassword(email, password).await()
             Result.success(Unit)
@@ -26,5 +26,9 @@ class AuthenticationRepositoryImpl : AuthenticationRepository {
 
     override fun getUserId(): String? {
         return Firebase.auth.currentUser?.uid
+    }
+
+    override suspend fun logout() {
+        Firebase.auth.signOut()
     }
 }

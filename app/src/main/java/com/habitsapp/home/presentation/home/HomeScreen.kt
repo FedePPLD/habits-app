@@ -43,6 +43,7 @@ import com.habitsapp.home.presentation.home.components.HomeQuote
 fun HomeScreen(
     onNewHabit: () -> Unit,
     onEditHabit: (String) -> Unit,
+    onSettings: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -52,7 +53,7 @@ fun HomeScreen(
         CenterAlignedTopAppBar(title = {
             Text(text = "Home")
         }, navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = onSettings) {
                 Icon(imageVector = Icons.Default.Settings, contentDescription = "settings")
             }
         })
